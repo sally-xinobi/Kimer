@@ -3,17 +3,17 @@
 <plist version="1.0">
 <dict>
     <key>CFBundleName</key>
-    <string>KeyHigh</string>
+    <string>Kimer</string>
     <key>CFBundleDisplayName</key>
-    <string>KeyHigh</string>
+    <string>Kimer</string>
     <key>CFBundleIdentifier</key>
-    <string>com.keyhigh.app</string>
+    <string>com.kimer.app</string>
     <key>CFBundleVersion</key>
     <string>1</string>
     <key>CFBundleShortVersionString</key>
-    <string>0.1.2</string>
+    <string>0.1.0</string>
     <key>CFBundleExecutable</key>
-    <string>KeyHigh</string>
+    <string>Kimer</string>
     <key>CFBundleIconFile</key>
     <string>AppIcon</string>
     <key>CFBundlePackageType</key>
@@ -27,6 +27,6 @@
     <key>NSHighResolutionCapable</key>
     <true/>
     <key>NSHumanReadableCopyright</key>
-    <string>KeyHigh</string>
+    <string>Kimer</string>
 </dict>
 </plist>

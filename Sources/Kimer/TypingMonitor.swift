@@ -28,7 +28,7 @@ final class TypingMonitor {
             self?.didReceiveKeystroke()
         }
         let installed = monitor != nil
-        fputs("KeyHigh: global keyDown monitor installed=\(installed)\n", stderr)
+        fputs("Kimer: global keyDown monitor installed=\(installed)\n", stderr)
     }
 
     private var loggedFirstKeystroke = false
@@ -36,7 +36,7 @@ final class TypingMonitor {
     private func didReceiveKeystroke() {
         if !loggedFirstKeystroke {
             loggedFirstKeystroke = true
-            fputs("KeyHigh: first keystroke received — Input Monitoring permission OK\n", stderr)
+            fputs("Kimer: first keystroke received — Input Monitoring permission OK\n", stderr)
         }
         tracker?.recordKeystroke()
     }
@@ -52,14 +52,14 @@ final class TypingMonitor {
 
     private func ensureInputMonitoringAccess() {
         let status = IOHIDCheckAccess(kIOHIDRequestTypeListenEvent)
-        fputs("KeyHigh: IOHIDCheckAccess(listenEvent) = \(describe(status))\n", stderr)
+        fputs("Kimer: IOHIDCheckAccess(listenEvent) = \(describe(status))\n", stderr)
         if status == kIOHIDAccessTypeGranted { return }
 
         // Triggers the system prompt the first time the app is run with this
         // bundle id. After the user dismisses it, subsequent calls just return
         // the recorded decision without prompting again.
         let granted = IOHIDRequestAccess(kIOHIDRequestTypeListenEvent)
-        fputs("KeyHigh: IOHIDRequestAccess returned granted=\(granted)\n", stderr)
+        fputs("Kimer: IOHIDRequestAccess returned granted=\(granted)\n", stderr)
         if !granted, !didShowAlert {
             didShowAlert = true
             showPermissionAlert()
@@ -83,11 +83,11 @@ final class TypingMonitor {
             NSApp.activate(ignoringOtherApps: true)
 
             let alert = NSAlert()
-            alert.messageText = "KeyHigh needs Input Monitoring access"
+            alert.messageText = "Kimer needs Input Monitoring access"
             alert.informativeText = """
-            KeyHigh listens for keystrokes globally so the character can react when you type.
+            Kimer listens for keystrokes globally so the character can react when you type.
 
-            Open System Settings → Privacy & Security → Input Monitoring and enable KeyHigh, then relaunch the app.
+            Open System Settings → Privacy & Security → Input Monitoring and enable Kimer, then relaunch the app.
             """
             alert.alertStyle = .warning
             alert.addButton(withTitle: "Open Settings")

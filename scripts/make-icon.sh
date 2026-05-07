@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #
-# Renders a 🐭 emoji on a soft cream squircle and packs it into App/AppIcon.icns.
+# Renders a 🍅 emoji on a soft cream squircle and packs it into App/AppIcon.icns.
 # Idempotent — run again to regenerate (e.g. after changing colours or emoji).
 #
 set -euo pipefail
@@ -23,14 +23,14 @@ let size = NSSize(width: 1024, height: 1024)
 let image = NSImage(size: size)
 image.lockFocus()
 
-// rounded "squircle" background — cream so the gray mouse glyph reads well
+// rounded "squircle" background — cream so the tomato glyph still reads warm
 let bg = NSRect(origin: .zero, size: size)
 let path = NSBezierPath(roundedRect: bg, xRadius: 224, yRadius: 224)
 NSColor(calibratedRed: 1.0, green: 0.94, blue: 0.78, alpha: 1.0).setFill()
 path.fill()
 
 // centered emoji, large enough to fill most of the icon
-let emoji = "🐭" as NSString
+let emoji = "🍅" as NSString
 let font = NSFont.systemFont(ofSize: 760)
 let attrs: [NSAttributedString.Key: Any] = [.font: font]
 let textSize = emoji.size(withAttributes: attrs)

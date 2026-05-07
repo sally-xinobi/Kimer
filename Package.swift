@@ -2,14 +2,14 @@
 import PackageDescription
 
 let package = Package(
-    name: "KeyHigh",
+    name: "Kimer",
     platforms: [
         .macOS(.v13)
     ],
     targets: [
         .executableTarget(
-            name: "KeyHigh",
-            path: "Sources/KeyHigh"
+            name: "Kimer",
+            path: "Sources/Kimer"
         )
     ]
 )

@@ -4,12 +4,13 @@ set -euo pipefail
 cd "$(dirname "$0")/.."
 
 CONFIG="${CONFIG:-release}"
-APP_NAME="KeyHigh"
+APP_NAME="Kimer"
 APP=".build/${APP_NAME}.app"
 
-# Override with `KEYHIGH_SIGNING_IDENTITY=- ./scripts/build.sh` for ad-hoc.
-SIGNING_IDENTITY="${KEYHIGH_SIGNING_IDENTITY:-Developer ID Application: Jahyeon Ko (RP5GZ99V95)}"
-ENTITLEMENTS="App/KeyHigh.entitlements"
+# Defaults to ad-hoc signing so anyone can build locally without a Developer ID.
+# Override with `KIMER_SIGNING_IDENTITY="Developer ID Application: Your Name (TEAMID)" ./scripts/build.sh`
+SIGNING_IDENTITY="${KIMER_SIGNING_IDENTITY:--}"
+ENTITLEMENTS="App/Kimer.entitlements"
 
 echo "==> swift build -c ${CONFIG}"
 swift build -c "${CONFIG}"

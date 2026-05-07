@@ -5,6 +5,7 @@ struct CharacterView: View {
     @ObservedObject var tracker: TypingSpeedTracker
     @ObservedObject var instance: CharacterInstance
     @ObservedObject var store: InstancesStore
+    @ObservedObject var timerStore: StudyTimerStore
 
     private var isAnimating: Bool {
         tracker.state == .running || instance.clickBoost > 0
@@ -73,6 +74,8 @@ struct CharacterView: View {
             }
         }
         Divider()
+        StudyTimerMenu(store: timerStore)
+        Divider()
         Button("Add Character (\(store.instances.count)/\(InstancesStore.maxInstances))") {
             _ = store.add()
         }
@@ -82,14 +85,14 @@ struct CharacterView: View {
         }
         .disabled(store.instances.count <= 1)
         Divider()
-        Button("Quit KeyHigh") {
+        Button("Quit Kimer") {
             NSApp.terminate(nil)
         }
     }
 
     private var placeholder: some View {
         VStack(spacing: 4) {
-            Text("KeyHigh")
+            Text("Kimer")
                 .font(.system(size: 14, weight: .semibold))
             Text("drop <name>_idle.mov\nand <name>_run.mov\ninto Resources/")
                 .font(.system(size: 10))

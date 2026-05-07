@@ -5,19 +5,19 @@ cd "$(dirname "$0")/.."
 
 ./scripts/build.sh
 
-APP=".build/KeyHigh.app"
-BIN="${APP}/Contents/MacOS/KeyHigh"
-LOG_DIR="${HOME}/Library/Logs/KeyHigh"
-LOG="${LOG_DIR}/keyhigh.log"
+APP=".build/Kimer.app"
+BIN="${APP}/Contents/MacOS/Kimer"
+LOG_DIR="${HOME}/Library/Logs/Kimer"
+LOG="${LOG_DIR}/kimer.log"
 
 mkdir -p "${LOG_DIR}"
 
 # kill any previous instance so position/permission reload cleanly
-pkill -x KeyHigh 2>/dev/null || true
+pkill -x Kimer 2>/dev/null || true
 sleep 0.3
 
 # Launching the binary directly from the shell (rather than `open`) makes
-# KeyHigh inherit the shell's Input Monitoring grant. With ad-hoc signing
+# Kimer inherit the shell's Input Monitoring grant. With ad-hoc signing
 # every rebuild produces a fresh code hash, so a permission granted to a
 # previous build does not transfer — using the shell's inherited grant
 # sidesteps the re-prompt loop during development.
@@ -27,10 +27,10 @@ nohup "${BIN}" > "${LOG}" 2>&1 &
 disown
 
 sleep 0.6
-if pgrep -x KeyHigh > /dev/null; then
-    echo "==> KeyHigh started (pid $(pgrep -x KeyHigh))"
+if pgrep -x Kimer > /dev/null; then
+    echo "==> Kimer started (pid $(pgrep -x Kimer))"
 else
-    echo "ERROR: KeyHigh did not start. Tail of log:" >&2
+    echo "ERROR: Kimer did not start. Tail of log:" >&2
     tail -n 20 "${LOG}" >&2 || true
     exit 1
 fi
