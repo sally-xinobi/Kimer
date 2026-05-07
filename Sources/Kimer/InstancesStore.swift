@@ -24,22 +24,30 @@ final class InstancesStore: ObservableObject {
 
     init(library: [CharacterAssets]) {
         self.library = library
-
-        let loaded = Self.load(library: library)
-        if loaded.isEmpty {
-            // First run: seed with one mouse-character at the default origin.
-            let size = CharacterSize.small
-            let inst = CharacterInstance(
-                characterID: "mouse",
-                sizeRaw: size.rawValue,
-                origin: Self.defaultOrigin(forSize: size.nsSize, indexOffset: 0),
-                library: library
-            )
-            self.instances = [inst]
-        } else {
-            self.instances = loaded
-        }
+        // First run leaves `instances` empty intentionally — AppDelegate is in
+        // charge of deciding what to show (e.g. the character picker) when no
+        // saved instances exist.
+        self.instances = Self.load(library: library)
         self.instances.forEach { $0.store = self }
+    }
+
+    /// Used by AppDelegate after the first-launch picker resolves. Adds a
+    /// single instance of the chosen character at the default origin and
+    /// persists it so the picker won't show again.
+    @discardableResult
+    func seedFirstCharacter(characterID: String) -> CharacterInstance? {
+        guard instances.isEmpty else { return nil }
+        let size = CharacterSize.small
+        let inst = CharacterInstance(
+            characterID: characterID,
+            sizeRaw: size.rawValue,
+            origin: Self.defaultOrigin(forSize: size.nsSize, indexOffset: 0),
+            library: library
+        )
+        inst.store = self
+        instances.append(inst)
+        scheduleSave()
+        return inst
     }
 
     @discardableResult
@@ -47,8 +55,13 @@ final class InstancesStore: ObservableObject {
         guard instances.count < Self.maxInstances else { return nil }
         let size = CharacterSize.small
         let origin = Self.defaultOrigin(forSize: size.nsSize, indexOffset: instances.count)
+        // Default to the most-recent instance's character so "Add Character"
+        // produces a familiar friend rather than always seeding mouse.
+        let defaultID = instances.last?.characterID
+            ?? library.first?.id
+            ?? "mouse"
         let inst = CharacterInstance(
-            characterID: "mouse",
+            characterID: defaultID,
             sizeRaw: size.rawValue,
             origin: origin,
             library: library
